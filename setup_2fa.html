@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Enable 2FA{% endblock %}
+{% block content %}
+<h1>Enable two-factor auth</h1>
+<ol>
+  <li>Open Google Authenticator, Authy or similar.</li>
+  <li>Add an account using <strong>enter a setup key</strong> and type in this key:</li>
+</ol>
+<p class="secret">{{ secret }}</p>
+<p class="hint">Or paste this URI into an app that supports it:<br><code>{{ uri }}</code></p>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Enter the 6-digit code to confirm
+    <input name="code" inputmode="numeric" pattern="\d{6}" maxlength="6" required autocomplete="off">
+  </label>
+  <button type="submit">Enable 2FA</button>
+</form>
+<p class="alt"><a href="{{ url_for('dashboard') }}">Cancel</a></p>
+{% endblock %}
